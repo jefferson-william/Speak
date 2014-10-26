@@ -1,0 +1,28 @@
+<% include ../header %>
+
+<section class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="page-header">
+				<h1>Dados do contato</h1>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<form action="/contato/<%- id %>/?_method=delete" method="post" role="form">
+				<p><label>Nome:</label> <%- contato.nome %></p>
+				<p><label>E-mail:</label> <%- contato.email %></p>
+				<p>
+					<a href="/contato/<%- id %>/editar/" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+					<button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></button>
+				</p>
+			</form>
+		</div>
+	</div>
+</section>
+
+<% include ../footer %>

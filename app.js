@@ -3,6 +3,7 @@ var load = require('express-load');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
+var methodOverride = require('method-override');
 
 var app = express();
 
@@ -12,6 +13,7 @@ app.use(cookieParser('Speak'));
 app.use(expressSession());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/public'));
 
 load('models')
