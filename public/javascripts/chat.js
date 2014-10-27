@@ -11,10 +11,9 @@ jQuery(document).ready(function ($) {
 
 	$('#ChatForm').on('submit', function (event) {
 		event.preventDefault();
-		var nome = $('#ChatNome').val();
 		var mensagem = $('#ChatMensagem').val();
+		socket.emit('send-server', mensagem);
 		$('#ChatMensagem').val('');
-		socket.emit('send-server', { nome: nome, mensagem: mensagem });
 	});
 
 });
