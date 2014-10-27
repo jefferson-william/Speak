@@ -27,13 +27,8 @@ load('models')
 app.use(error.notFound);
 app.use(error.serverError);
 
-io.sockets.on('connection', function (client) {
-	client.on('send-server', function (data) {
-		var mensagem = '<b>' + data.nome + ':</b> ' + data.mensagem + '<br>';
-		client.emit('send-client', mensagem);
-		client.broadcast.emit('send-client', mensagem);
-	});
-});
+load('sockets')
+	.into(io);
 
 server.listen(3001, function () {
 	console.log('Speak rodando em *:3001.');
