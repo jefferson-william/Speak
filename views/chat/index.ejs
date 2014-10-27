@@ -28,6 +28,23 @@
 	</div>
 </section>
 
-<script src="/javascripts/chat.js"></script>
+<script>
+	var socket = io('http://localhost:3001');
+
+	socket.emit('join', '<%- sala %>');
+
+	socket.on('send-client', function (mensagem) {
+		var mensagens = $('#Chat').html();
+		mensagens += mensagem;
+		$('#Chat').html(mensagens);
+	});
+
+	$('#ChatForm').on('submit', function (event) {
+		event.preventDefault();
+		var mensagem = $('#ChatMensagem').val();
+		socket.emit('send-server', mensagem);
+		$('#ChatMensagem').val('');
+	});
+</script>
 
 <% include ../footer %>
