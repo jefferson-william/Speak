@@ -13,7 +13,7 @@
 <section class="container">
 	<div class="row">
 		<div class="col-xs-12 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
-			<form action="/contato/<%- id %>/?_method=put" method="post" role="form">
+			<form action="/contato/<%- contato._id %>/?_method=put" method="post" role="form">
 				<fieldset>
 					<div class="form-group">
 						<input type="text" class="form-control" name="contato[nome]" value="<%- contato.nome %>" placeholder="Nome" autofocus>

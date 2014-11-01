@@ -2,8 +2,35 @@
 <script>
 	var socket = io('http://localhost:3001');
 
+	var notify = function (data) {
+		var id = 'Notify_' + data.email;
+		var notify = document.getElementById(id);
+		if (notify) {
+			notify.textContent = data.mensagem;
+		}
+	};
+
+	socket.on('notify-onlines', function (email) {
+		notify({
+			email: email,
+			mensagem: 'Online'
+		});
+	});
+
+	socket.on('notify-offlines', function (email) {
+		notify({
+			email: email,
+			mensagem: 'Offline'
+		});
+	});
+
 	socket.on('new-message', function (data) {
-		var chat = document.getElementById('Chat_' + data.email);
+		notify({
+			email: data.email,
+			mensagem: 'Mensagem'
+		});
+		var id = 'Chat_' + data.email;
+		var chat = document.getElementById(id);
 		chat.href += '?sala=' + data.sala;
 	});
 </script>

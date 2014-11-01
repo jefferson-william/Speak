@@ -19,6 +19,7 @@
 						<tr>
 							<th>Nome</th>
 							<th>E-mail</th>
+							<th>Status</th>
 							<th>Ação</th>
 						</tr>
 					</thead>
@@ -27,6 +28,9 @@
 						<tr>
 							<td><%- contato.nome %></td>
 							<td><%- contato.email %></td>
+							<td>
+								<span id="Notify_<%- contato.email %>">Offline</span>
+							</td>
 							<td>
 								<a href="/contato/<%- contato._id %>/" class="btn btn-default btn-xs" title="Visualizar"><i class="glyphicon glyphicon-eye-open"></i></a>
 								<a href="/contato/<%- contato._id %>/editar/" class="btn btn-primary btn-xs" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
