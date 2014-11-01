@@ -13,11 +13,11 @@
 <section class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<form action="/contato/<%- id %>/?_method=delete" method="post" role="form">
+			<form action="/contato/<%- contato._id %>/?_method=delete" method="post" role="form">
 				<p><label>Nome:</label> <%- contato.nome %></p>
 				<p><label>E-mail:</label> <%- contato.email %></p>
 				<p>
-					<a href="/contato/<%- id %>/editar/" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
+					<a href="/contato/<%- contato._id %>/editar/" class="btn btn-primary btn-xs"><i class="glyphicon glyphicon-edit"></i></a>
 					<button type="submit" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-remove"></i></button>
 				</p>
 			</form>
