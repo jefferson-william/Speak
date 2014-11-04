@@ -2,15 +2,17 @@ module.exports = function (io) {
 	var crypto = require('crypto');
 	var redis = require('redis').createClient();
 	var sockets = io.sockets;
-	var onlines = {};
 	sockets.on('connection', function (client) {
 		var session = client.handshake.session;
 		var usuario = session.usuario;
-		onlines[usuario.email] = usuario.email;
-		for (var email in onlines) {
-			client.emit('notify-onlines', email);
-			client.broadcast.emit('notify-onlines', email);
-		}
+		redis.sadd('onlines', usuario.email, function (erro) {
+			redis.smembers('onlines', function (erro, emails) {
+				emails.forEach(function (email) {
+					client.emit('notify-onlines', email);
+					client.broadcast.emit('notify-onlines', email);
+				});
+			});
+		});
 		client.on('join', function (sala) {
 			if (!sala) {
 				var timestamp = new Date().toString();
@@ -45,7 +47,7 @@ module.exports = function (io) {
 			redis.lpush(sala, mensagem);
 			client.broadcast.emit('notify-offlines', usuario.email);
 			sockets.in(sala).emit('send-client', mensagem);
-			delete onlines[usuario.email];
+			redis.srem('onlines', usuario.email);
 			client.leave(sala);
 		});
 	});
