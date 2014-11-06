@@ -15,8 +15,6 @@ var cookie = cookieParser(SECRET);
 var store = new expressSession.MemoryStore();
 var mongoose = require('mongoose');
 
-global.db = mongoose.connect('mongodb://localhost/speak');
-
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(cookie);
