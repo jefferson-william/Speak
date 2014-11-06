@@ -13,5 +13,9 @@
     "method-override": "^2.3.0",
     "socket.io": "^1.1.0",
     "mongoose": "^3.8.18"
+  },
+  "devDependencies": {
+    "mocha": "^2.0.1",
+    "supertest": "^0.14.0"
   }
 }
