@@ -59,3 +59,5 @@ load('sockets')
 server.listen(3001, function () {
 	console.log('Speak rodando em *:3001.');
 });
+
+module.exports = app;

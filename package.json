@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Speak - Agenda de contatos",
   "private": false,
-  "scrips": {
-  	"start": "node app.js",
-  	"test": "NODE_ENV=test ./node_modules/.bin/mocha test/**/*.js"
+  "scripts": {
+    "start": "node app.js",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha test/**/*.js"
   },
   "dependencies": {
     "express": "^4.10.0",
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "mocha": "^2.0.1",
-    "supertest": "^0.14.0"
+    "supertest": "^0.14.0",
+    "should": "^4.1.0"
   }
 }
