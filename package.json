@@ -4,19 +4,21 @@
   "description": "Speak - Agenda de contatos",
   "private": false,
   "scripts": {
-    "start": "node clusters.js",
+    "start": "DEBUG=* sudo node clusters >> app.log",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha test/**/*.js"
   },
   "dependencies": {
-    "express": "^4.10.0",
-    "cookie-parser": "^1.3.3",
     "body-parser": "^1.9.1",
+    "connect-redis": "^2.1.0",
+    "cookie-parser": "^1.3.3",
     "ejs": "^1.0.0",
+    "express": "^4.10.0",
     "express-load": "^1.1.14",
     "express-session": "^1.9.1",
     "method-override": "^2.3.0",
+    "mongoose": "^3.8.18",
     "socket.io": "^1.1.0",
-    "mongoose": "^3.8.18"
+    "socket.io-redis": "^0.1.3"
   },
   "devDependencies": {
     "mocha": "^2.0.1",

@@ -8,12 +8,13 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var methodOverride = require('method-override');
 var error = require('./middlewares/error');
+var redisAdapter = require('socket.io-redis');
+var RedisStore = require('connect-redis')(expressSession);
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var cookie = cookieParser(SECRET);
-var store = new expressSession.MemoryStore();
-var mongoose = require('mongoose');
+var store = new RedisStore({ prefix: KEY });
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -29,6 +30,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/public'));
+
+io.adapter(redisAdapter({
+	host: 'localhost',
+	port: 6379
+}));
 
 load('models')
 	.then('controllers')
