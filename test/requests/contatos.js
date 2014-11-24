@@ -1,5 +1,4 @@
 var app = require('../../app');
-var should = require('should');
 var request = require('supertest')(app);
 
 describe('No controller contatos', function () {
@@ -44,6 +43,48 @@ describe('No controller contatos', function () {
 		});
 	});
 	describe('o usuario logado', function () {
-		// Testes aqui
+		var login = {
+			usuario: {
+				nome: 'Teste',
+				email: 'teste@teste.com'
+			}
+		};
+		var contato = {
+			contato: {
+				nome: 'Teste',
+				email: 'teste@teste.com'
+			}
+		};
+		cookie = {};
+		beforeEach(function (done) {
+			request.post('/entrar/')
+				.send(login)
+				.end(function (err, res) {
+					cookie = res.headers['set-cookie'];
+					done();
+				});
+		});
+		it('deve retornar status 200 em GET /contatos/', function (done) {
+			var req = request.get('/contatos/');
+			req.cookies = cookie;
+			req.end(function (err, res) {
+				res.status.should.eql(200);
+				done();
+			});
+		});
+		it('deve ir para rota /contatos/ em POST /contato/', function (done) {
+			var contato = {
+				contato: {
+					nome: 'Teste',
+					email: 'teste@teste.com'
+				}
+			};
+			var req = request.post('/contato/');
+			req.cookies = cookie;
+			req.send(contato).end(function (err, res) {
+				res.headers.location.should.eql('/contatos/');
+				done();
+			});
+		});
 	});
 });
