@@ -13,7 +13,7 @@ describe('No controller home', function () {
 	it('deve ir para a rota / ao fazer GET /sair/', function (done) {
 		request.get('/sair/')
 			.end(function (err, res) {
-				res.headers.location.should.eql('');
+				res.headers.location.should.eql('/');
 				done();
 			});
 	});
