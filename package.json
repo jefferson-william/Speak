@@ -4,7 +4,7 @@
   "description": "Speak - Agenda de contatos",
   "private": false,
   "scripts": {
-    "start": "DEBUG=* sudo node clusters >> app.log",
+    "start": "DEBUG=* sudo node server",
     "test": "NODE_ENV=test ./node_modules/.bin/mocha test/**/*.js"
   },
   "dependencies": {
@@ -17,6 +17,7 @@
     "express": "^4.10.0",
     "express-load": "^1.1.14",
     "express-session": "^1.9.1",
+    "forever-monitor": "^1.5.2",
     "method-override": "^2.3.0",
     "mongoose": "^3.8.18",
     "socket.io": "^1.1.0",
