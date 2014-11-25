@@ -1,6 +1,4 @@
-const KEY = 'speak.sid';
-const SECRET = 'speak';
-
+var config = require('./config.json');
 var express = require('express');
 var load = require('express-load');
 var bodyParser = require('body-parser');
@@ -15,10 +13,10 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var redisConnect = require('./libs/redis_connect');
 var ExpressStore = redisConnect.getExpressStore();
-var cookie = cookieParser(SECRET);
+var cookie = cookieParser(config.SECRET);
 var store = new ExpressStore({
 	client: redisConnect.getClient(),
-	prefix: KEY
+	prefix: config.KEY
 });
 var redisAdapter = require('socket.io-redis');
 var RedisStore = require('connect-redis')(expressSession);
@@ -29,8 +27,8 @@ app.set('view engine', 'ejs');
 app.use(compression());
 app.use(cookie);
 app.use(expressSession({
-	secret: SECRET,
-	name: KEY,
+	secret: config.SECRET,
+	name: config.KEY,
 	resave: true,
 	saveUninitialized: true,
 	store: store
@@ -39,7 +37,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/public', {
-	maxAge: 3600000
+	maxAge: config.CACHE
 }));
 app.use(csurf());
 app.use(function (req, res, next) {
@@ -47,10 +45,7 @@ app.use(function (req, res, next) {
 	next();
 });
 
-io.adapter(redisAdapter({
-	host: 'localhost',
-	port: 6379
-}));
+io.adapter(redisAdapter(config.REDIS));
 
 load('models')
 	.then('controllers')
@@ -63,7 +58,7 @@ app.use(error.serverError);
 io.use(function (socket, next) {
 	var data = socket.request;
 	cookie(data, {}, function (err) {
-		var sessionID = data.signedCookies[KEY];
+		var sessionID = data.signedCookies[config.KEY];
 		store.get(sessionID, function (err, session) {
 			if (err || !session) {
 				return next(new Error('Acesso negado.'));
