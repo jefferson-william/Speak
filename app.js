@@ -7,17 +7,24 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var methodOverride = require('method-override');
+var compression = require('compression');
 var error = require('./middlewares/error');
-var redisAdapter = require('socket.io-redis');
-var RedisStore = require('connect-redis')(expressSession);
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
+var redisConnect = require('./libs/redis_connect');
+var ExpressStore = redisConnect.getExpressStore();
 var cookie = cookieParser(SECRET);
-var store = new RedisStore({ prefix: KEY });
+var store = new ExpressStore({
+	client: redisConnect.getClient(),
+	prefix: KEY
+});
+var redisAdapter = require('socket.io-redis');
+var RedisStore = require('connect-redis')(expressSession);
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+app.use(compression());
 app.use(cookie);
 app.use(expressSession({
 	secret: SECRET,
@@ -29,7 +36,9 @@ app.use(expressSession({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
-app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/public', {
+	maxAge: 3600000
+}));
 
 io.adapter(redisAdapter({
 	host: 'localhost',
