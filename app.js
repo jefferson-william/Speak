@@ -23,6 +23,7 @@ var store = new ExpressStore({
 var redisAdapter = require('socket.io-redis');
 var RedisStore = require('connect-redis')(expressSession);
 
+app.disable('x-powered-by');
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(compression());
