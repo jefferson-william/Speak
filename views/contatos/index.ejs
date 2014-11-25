@@ -36,6 +36,7 @@
 								<a href="/contato/<%- contato._id %>/editar/" class="btn btn-primary btn-xs" title="Editar"><i class="glyphicon glyphicon-edit"></i></a>
 								<a href="/chat/" id="Chat_<%- contato.email %>" class="btn btn-info btn-xs" title="Conversar"><i class="glyphicon glyphicon-pencil"></i></a>
 								<form action="/contato/<%- contato._id %>/?_method=delete" method="post" role="form" style="display: inline-block;">
+									<input type="hidden" name="_csrf" value="<%- _csrf %>">
 									<button type="submit" class="btn btn-danger btn-xs" title="Excluir"><i class="glyphicon glyphicon-remove"></i></button>
 								</form>
 							</td>
@@ -48,6 +49,7 @@
 		<div class="col-xs-12 col-sm-12 col-md-4">
 			<form action="/contato/" method="post" role="form">
 				<fieldset>
+					<input type="hidden" name="_csrf" value="<%- _csrf %>">
 					<div class="form-group">
 						<input type="text" class="form-control" name="contato[nome]" placeholder="Nome" autofocus>
 					</div>

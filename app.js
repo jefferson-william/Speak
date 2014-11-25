@@ -8,6 +8,7 @@ var cookieParser = require('cookie-parser');
 var expressSession = require('express-session');
 var methodOverride = require('method-override');
 var compression = require('compression');
+var csurf = require('csurf');
 var error = require('./middlewares/error');
 var app = express();
 var server = require('http').Server(app);
@@ -39,6 +40,11 @@ app.use(methodOverride('_method'));
 app.use(express.static(__dirname + '/public', {
 	maxAge: 3600000
 }));
+app.use(csurf());
+app.use(function (req, res, next) {
+	res.locals._csrf = req.csrfToken();
+	next();
+});
 
 io.adapter(redisAdapter({
 	host: 'localhost',
